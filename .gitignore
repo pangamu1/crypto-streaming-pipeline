@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Spark Structured Streaming checkpoints (local runtime state)
+.checkpoints/

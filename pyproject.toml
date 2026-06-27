@@ -6,5 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "confluent-kafka>=2.14.2",
+    "psycopg2-binary>=2.9.12",
+    "pyspark>=3.5,<3.6",
     "websockets>=16.0",
 ]
