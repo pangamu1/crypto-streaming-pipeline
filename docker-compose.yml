@@ -44,6 +44,26 @@ services:
     depends_on:
       - kafka
 
+  airflow:
+    image: apache/airflow:2.10.5 # pin a real 2.x tag — confirm it exists on hub.docker.com/r/apache/airflow/tags
+    container_name: airflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8081:8080" # 8080 is taken by kafka-ui → UI lives at localhost:8081
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      AIRFLOW_CONN_TRADES_PG: postgresql://crypto:crypto@postgres:5432/crypto
+      _PIP_ADDITIONAL_REQUIREMENTS: apache-airflow-providers-postgres
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./sql:/opt/airflow/sql:ro
+      - airflow_data:/opt/airflow
+    command: standalone
+
 volumes:
   pgdata:
+  airflow_data:
 
